@@ -9941,15 +9941,14 @@ void process_next_command() {
       case 3://spindle on Filip
         //SET_OUTPUT(RAMPS_D8_PIN);
         stepper.synchronize(); 
-        digitalWrite(RAMPS_D8_PIN,HIGH);
-        //digitalWrite(RAMPS_D9_PIN,HIGH);
-        //digitalWrite(RAMPS_D10_PIN,HIGH);
+        gcode_M106();
+
         SERIAL_PROTOCOLLNPGM("Spindle Turned On");
         break;
 
       case 5: //spindle off Filip
         stepper.synchronize(); 
-        digitalWrite(RAMPS_D8_PIN,LOW);
+        gcode_M107();
         SERIAL_PROTOCOLLNPGM("Spindle Turned Off");
         break;
       
@@ -12334,7 +12333,8 @@ void setup() {
   #if ENABLED(ENDSTOP_INTERRUPTS_FEATURE)
     setup_endstop_interrupts();
   #endif
- 	pinMode(RAMPS_D8_PIN,OUTPUT); //Filip
+
+    pinMode(RAMPS_D8_PIN,OUTPUT); //Filip
 }
 
 /**
