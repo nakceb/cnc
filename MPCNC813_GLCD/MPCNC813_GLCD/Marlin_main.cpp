@@ -12334,8 +12334,7 @@ void setup() {
   #if ENABLED(ENDSTOP_INTERRUPTS_FEATURE)
     setup_endstop_interrupts();
   #endif
-
-    pinMode(RAMPS_D8_PIN,OUTPUT); //Filip
+	pinMode(RAMPS_D8_PIN,OUTPUT); //Filip
 }
 
 /**

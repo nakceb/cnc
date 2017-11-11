@@ -1,5 +1,3 @@
-#include <U8glib.h>
-
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -77,9 +75,9 @@
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
 #define STRING_CONFIG_H_AUTHOR "(Filip, Cnc config)" // Who made the changes.
-//#define SHOW_BOOTSCREEN
-//#define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-//#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
+#define SHOW_BOOTSCREEN
+#define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
+#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
 
 //
 // *** VENDORS PLEASE READ *****************************************************
@@ -485,7 +483,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 150, 150, 50, 25 } //MPCNC
+#define DEFAULT_MAX_FEEDRATE          { 15, 15, 5, 25 } //MPCNC
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -493,7 +491,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 900, 900, 300, 10000 } //MPCNC
+#define DEFAULT_MAX_ACCELERATION      { 500, 500, 35, 10000 } //MPCNC
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -503,9 +501,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          900   // MPCNC X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          400    // MPCNC X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   900    // MPCNC X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   400    // MPCNC X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk (mm/s)
@@ -651,7 +649,6 @@
 //#define PROBE_DOUBLE_TOUCH
 */
 
-
 /**
  * Z probes require clearance when deploying, stowing, and moving between
  * probe points to avoid hitting the bed and other hardware.
@@ -673,8 +670,6 @@
 // For M851 give a range for adjusting the Z probe offset
 #define Z_PROBE_OFFSET_RANGE_MIN -20
 #define Z_PROBE_OFFSET_RANGE_MAX 20
-
-
 
 // Enable the M48 repeatability test to test probe accuracy
 //#define Z_MIN_PROBE_REPEATABILITY_TEST
@@ -736,8 +731,8 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 110
-#define Y_MAX_POS 160
+#define X_MAX_POS 96
+#define Y_MAX_POS 141
 #define Z_MAX_POS 18
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
@@ -946,7 +941,7 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (25*60)
+#define HOMING_FEEDRATE_XY (15*60)
 #define HOMING_FEEDRATE_Z  (5*60)
 
 //=============================================================================
@@ -1338,152 +1333,6 @@
 //
 #define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER //MPCNC
 
-/*
-  /////////////////FILIP 
-  
-  
-  #define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
-  
-  // The RepRapWorld REPRAPWORLD_KEYPAD v1.1
-  // http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626
-  //#define REPRAPWORLD_KEYPAD
-  //#define REPRAPWORLD_KEYPAD_MOVE_STEP 10.0 // how much should be moved when a key is pressed, eg 10.0 means 10mm per click
-  
-  // The Elefu RA Board Control Panel
-  // http://www.elefu.com/index.php?route=product/product&product_id=53
-  // REMEMBER TO INSTALL LiquidCrystal_I2C.h in your ARUDINO library folder: https://github.com/kiyoshigawa/LiquidCrystal_I2C
-  //#define RA_CONTROL_PANEL
-  
-  //automatic expansion
-  #if defined (MAKRPANEL)
-   #define DOGLCD
-   #define SDSUPPORT
-   #define ULTIPANEL
-   #define NEWPANEL
-   #define DEFAULT_LCD_CONTRAST 17
-  #endif
-  
-  #if defined (REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
-   #define DOGLCD
-   #define U8GLIB_ST7920
-   #define REPRAP_DISCOUNT_SMART_CONTROLLER
-  #endif
-  
-  #if defined(ULTIMAKERCONTROLLER) || defined(REPRAP_DISCOUNT_SMART_CONTROLLER) || defined(G3D_PANEL)
-   #define ULTIPANEL
-   #define NEWPANEL
-  #endif
-  
-  #if defined(REPRAPWORLD_KEYPAD)
-    #define NEWPANEL
-    #define ULTIPANEL
-  #endif
-  #if defined(RA_CONTROL_PANEL)
-   #define ULTIPANEL
-   #define NEWPANEL
-   #define LCD_I2C_TYPE_PCA8574
-   #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander
-  #endif
-  
-  //I2C PANELS
-  
-  //#define LCD_I2C_SAINSMART_YWROBOT
-  #ifdef LCD_I2C_SAINSMART_YWROBOT
-    // This uses the LiquidCrystal_I2C library ( https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home )
-    // Make sure it is placed in the Arduino libraries directory.
-    #define LCD_I2C_TYPE_PCF8575
-    #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander
-    #define NEWPANEL
-    #define ULTIPANEL
-  #endif
-  
-  // PANELOLU2 LCD with status LEDs, separate encoder and click inputs
-  //#define LCD_I2C_PANELOLU2
-  #ifdef LCD_I2C_PANELOLU2
-    // This uses the LiquidTWI2 library v1.2.3 or later ( https://github.com/lincomatic/LiquidTWI2 )
-    // Make sure the LiquidTWI2 directory is placed in the Arduino or Sketchbook libraries subdirectory.
-    // (v1.2.3 no longer requires you to define PANELOLU in the LiquidTWI2.h library header file)
-    // Note: The PANELOLU2 encoder click input can either be directly connected to a pin
-    //       (if BTN_ENC defined to != -1) or read through I2C (when BTN_ENC == -1).
-    #define LCD_I2C_TYPE_MCP23017
-    #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander
-    #define LCD_USE_I2C_BUZZER //comment out to disable buzzer on LCD
-    #define NEWPANEL
-    #define ULTIPANEL
-  
-    #ifndef ENCODER_PULSES_PER_STEP
-    #define ENCODER_PULSES_PER_STEP 4
-    #endif
-  
-    #ifndef ENCODER_STEPS_PER_MENU_ITEM
-    #define ENCODER_STEPS_PER_MENU_ITEM 1
-    #endif
-  
-  
-    #ifdef LCD_USE_I2C_BUZZER
-    #define LCD_FEEDBACK_FREQUENCY_HZ 1000
-    #define LCD_FEEDBACK_FREQUENCY_DURATION_MS 100
-    #endif
-  
-  #endif
-  
-  // Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/P buttons, separate encoder inputs
-  //#define LCD_I2C_VIKI
-  #ifdef LCD_I2C_VIKI
-    // This uses the LiquidTWI2 library v1.2.3 or later ( https://github.com/lincomatic/LiquidTWI2 )
-    // Make sure the LiquidTWI2 directory is placed in the Arduino or Sketchbook libraries subdirectory.
-    // Note: The pause/stop/resume LCD button pin should be connected to the Arduino
-    //       BTN_ENC pin (or set BTN_ENC to -1 if not used)
-    #define LCD_I2C_TYPE_MCP23017
-    #define LCD_I2C_ADDRESS 0x20 // I2C Address of the port expander
-    #define LCD_USE_I2C_BUZZER //comment out to disable buzzer on LCD (requires LiquidTWI2 v1.2.3 or later)
-    #define NEWPANEL
-    #define ULTIPANEL
-  #endif
-  
-  // Shift register panels
-  // ---------------------
-  // 2 wire Non-latching LCD SR from:
-  // https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
-  //#define SR_LCD
-  #ifdef SR_LCD
-     #define SR_LCD_2W_NL    // Non latching 2 wire shift register
-     //#define NEWPANEL
-  #endif
-  
-  
-  #ifdef ULTIPANEL
-  //  #define NEWPANEL  //enable this if you have a click-encoder panel
-    #define SDSUPPORT
-    #define ULTRA_LCD
-    #ifdef DOGLCD // Change number of lines to match the DOG graphic display
-      #define LCD_WIDTH 20
-      #define LCD_HEIGHT 5
-    #else
-      #define LCD_WIDTH 20
-      #define LCD_HEIGHT 4
-    #endif
-  #else //no panel but just LCD
-    #ifdef ULTRA_LCD
-    #ifdef DOGLCD // Change number of lines to match the 128x64 graphics display
-      #define LCD_WIDTH 20
-      #define LCD_HEIGHT 5
-    #else
-      #define LCD_WIDTH 16
-      #define LCD_HEIGHT 2
-    #endif
-    #endif
-  #endif
-  
-  // default LCD contrast for dogm-like LCD displays
-  #ifdef DOGLCD
-  # ifndef DEFAULT_LCD_CONTRAST
-  #  define DEFAULT_LCD_CONTRAST 32
-  # endif
-  #endif
-
-*/
- ///////////////////
 //
 // MakerLab Mini Panel with graphic
 // controller and SD support - http://reprap.org/wiki/Mini_panel
